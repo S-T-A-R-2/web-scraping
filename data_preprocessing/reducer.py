@@ -1,58 +1,45 @@
 #!/usr/bin/env python3
-from operator import itemgetter
 import sys
 import json
+import re
+import pickle
+from collections import defaultdict
 
-class WordCollection:
-    def __init__(self):
-        self.words = {}
+def reducer():
+    words = {}
 
-    def add(self, word, tag, page):
-        if (word not in self.words):
-            self.words[word] = {page: {tag: 1}}
-        else:
-            temp = self.words[word]
-            if (page not in temp):
-                temp[page] = {tag: 1}
-            elif (tag not in temp[page]):
-                temp[page][tag] = 1
-            else:
-                temp[page][tag] += 1
-
-    def get_words_pages(self):
-        result = {}
-        for word in self.words:
-            pages = []
-            for page in self.words[word]:
-                pages.append(page)
-            result[word] = pages
-        return result
-# Read and reduce
-index = 0
-words = WordCollection()
-words_contiguous = WordCollection()
-
-def third_reduce():
-    result = {}
-    for word in words.words:
-        result[word] = {}
-        for page in words.words[word]:
-            total = 0
-            for tag in words.words[word][page]:
-                total += words.words[word][page][tag]
-            result[word][page] = total
-    print(result)
-
-def reducer():    
     for line in sys.stdin:
-        line =  line.strip() #quita saltos de línea
-        content = line[1:-1].split(',', 2)
-        if (len(content[0].split(' ')) == 2):
-            words_contiguous.add(content[0], content[1], content[2])
-        else:
-            words.add(content[0], content[1], content[2])
-    #third_reduce()
-    print(json.dumps(words.words, indent=4))
+        line = line.strip()
+        content = line[1:-1].split(',', 2)  # Extract word, tag, and page
+        word = content[0]
+        tag = content[1]
+        page = content[2]
 
+        if (word in words):
+            if (page not in words[word]):
+                words[word][page] = {}
+            if (tag not in words[word][page]):
+                words[word][page][tag] = 1
+            else:
+                words[word][page][tag] += 1
+        else:
+            words[word] = {page: {tag: 1}}
+
+    # Imprime el resultado en formato JSON
+    for word in words:
+        print(f'{word}:{{', end='')
+        for page in words[word]:
+            print(f'{page}: [', end='')
+            last_key, last_value = words[word][page].popitem()
+            for tag in words[word][page]:
+                temp = words[word][page][tag]
+                if (temp != 0):
+                    print(f'{tag}: {temp}, ', end='')
+            print(f'{last_key}: {last_value}', end='')
+            print(']', end='')
+        print('}')
+    #with open('data.pkl', 'wb') as f:
+    #    pickle.dump(words, f)
+    #print(json.dumps(words, indent=2))
 if __name__ == "__main__":
     reducer()
