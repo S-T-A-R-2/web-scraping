@@ -1,6 +1,6 @@
 import mysql.connector
 import re
-# Conexión a la base de datos MariaDB
+# Conexión a MariaDB
 db = mysql.connector.connect(
     host = '192.168.100.15',
     user = 'frijol',
@@ -38,7 +38,6 @@ def get_tag_id(tag):
     return cursor.fetchone()[0]
 
 def insert_pagetag(id_tag, id_page, differents_words, total_words):
-    # Insertar relación en la tabla `PageTags`
     cursor.execute("""
         INSERT INTO PageTags (id_tag, id_page, differents_words, total_words)
         VALUES (%s, %s, 1, %s)
@@ -60,7 +59,6 @@ def insert_wordcontpage(id_word1, id_word2, id_tag, id_page):
         VALUES (%s, %s, %s, %s)
     """, (id_word1, id_word2, id_tag, id_page))
     db.commit()
-
 
 # Leer el archivo
 file_path = "data2_reduced.txt"
