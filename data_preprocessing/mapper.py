@@ -55,7 +55,7 @@ def mapper():
             open_tag = not open_tag
             if (not open_tag):
                 current_tag = 'p'
-        if last not in discard and (not re.match(r'^\d+$', last)) and len(last) > 1 and not has_number(contiguous):
-            print(f'({word},{current_tag},{current_page})')
+        if last not in discard and (not re.match(r'^\d+$', last)) and len(last) > 1 and not has_number(last):
+            print(f'({last},{current_tag},{current_page})')
 if __name__ == "__main__":
     mapper()
