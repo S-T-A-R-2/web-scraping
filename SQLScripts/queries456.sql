@@ -27,9 +27,9 @@ END //
 DELIMITER ;
 -- 6
 DELIMILER //
-CREATE PROCEDURE GetWordContTagCountInPage (IN word_text VARCHAR(60))
+CREATE OR REPLACE PROCEDURE GetWordContTagCountInPage (IN word_text VARCHAR(200))
 BEGIN
-    SELECT t.text AS tag, p.url AS page_url, SUM(ptw.count) AS count
+    SELECT t.text AS tag, p.url AS page_url, SUM(wcp.count) AS count
     FROM WordContPage wcp
     INNER JOIN WordContiguous wc 
     ON wcp.id_word = wc.id
