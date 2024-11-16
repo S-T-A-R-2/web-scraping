@@ -14,14 +14,29 @@ export const searchByWord = async (req:any, res: any) => {
         words = words.filter((word: string) => !excludedWords.has(word.toLowerCase()));
         words = Array.from(new Set(words));
         
+        let wordsCont = new Array<string>;
+        for (let i = 0;i < words.length -1 ; i++) {
+            wordsCont[i] = words[i] + " " +words[i+1];
+        }
+
+        console.log(wordsCont);
 
         let temp: any;
         let result: Array<any> = new Array();
-        for (const word of words) {
-            temp = await connectDB("CALL searchByWord(?);", word);
+        let i = 0;
+        for (i; i < wordsCont.length; i++) {
+            temp = await connectDB("CALL searchByWord(?);", words[i]);
             result.push(temp)
+            temp = await connectDB('CALL searchByWordContiguous(?);', wordsCont[i]);
+            result.push(temp);
         }
+        temp = await connectDB("CALL searchByWord(?);", words[i++]);
+        result.push(temp)
+
         console.log(result);
+
+        
+
         res.json(result);
     } catch (error: any) {
         res.status(500).json({message: "No se pudo buscar", error: error.message});
