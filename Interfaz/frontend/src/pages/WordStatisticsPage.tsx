@@ -78,9 +78,6 @@ const WordStatisticsPage = () => {
           )}
         </div>
         <div className='m-2 '>
-          <p className='p-2'>Conteo de palabras por páginas:</p>
-        </div>
-        <div className='m-2 '>
         <p className='p-2'>Conteo de <b>palabras contiguas</b> en tags por página:</p>
         {tagContWord &&( 
             <div className="overflow-y-auto p-5">
