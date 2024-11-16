@@ -32,17 +32,16 @@ const SearchWordsPage = () => {
 
   return (
     <div className="text-white bg-zinc-900 m-auto h-screen max-w-[800px]">
-      <h1 className='text-5xl p-5'>Buscar por páginas</h1>
+      <h1 className='text-5xl p-5'>Buscar por palabras</h1>
       <form onSubmit={handleSearch}>
         <div className='flex p-5'>
           <Input placeholder='Buscar palabras...' {...register("text", {required: true})}/>
           <Button type="submit" className="inline"> Search </Button>
         </div>
       </form>
-      <Button className="text-2xl" onClick={() => {navigate("/")}}>Volver a inicio</Button>
       {links &&( 
-        <div className="max-h-96 overflow-y-auto">
-          <ul role="list" >
+        <div className="overflow-y-auto p-5">
+          <ul role="list">
           {links.map((link: Array<any>, index: number) => (
             <li key={index} className="bg-white border border-gray-300 rounded-lg p-4 shadow-md mb-4">
                 {link[0] &&
@@ -60,6 +59,8 @@ const SearchWordsPage = () => {
           </ul>
         </div>
       )}
+
+      <Button className="text-2xl" onClick={() => {navigate("/")}}>Volver a inicio</Button>
     </div>
   );
 };

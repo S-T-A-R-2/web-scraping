@@ -1,5 +1,4 @@
 import axios from './axios';
-import { User } from '../logic/classes/User'
 
 type UserData = {
     username: string;
@@ -10,54 +9,29 @@ type UserData = {
     rol: string;
 };
 
-type InvoiceData = {
-    number: number;
-    date: string;
-    pharmacy: string;
-    medicine: string;
-    quantity: number;
-    image: string;
-    state: string;
-};
-
-type MedicineData = {
-    name: string;
-    description: string;
-    redeeming_points: number;
-    points_given: number;
-};
-
 type SearchByWordData = {
     text: string;
 }
 
+//No se como quitar eso sin que se rompa
 export const registerRequest = (userData : UserData) => {return axios.post(`/register`, userData);};
 export const loginRequest = (userData : {username : string, password : string}) => 
     axios.post(`/login`, userData);
 export const verifyTokenRequest = () => axios.get(`/verify`);
- 
-//Invoices
-export const createInvoice = (invoice : InvoiceData) => {
-    return axios.post('/createInvoice',invoice);
-}
 
-export const getAllInvoices = () => axios.get('/get-all-invoice'); 
-export const filterInvoices = (stateFilter:any, dateRangeFilter:any, searchInvoiceNumber:any, userFilter: any) => axios.get('/filter-invoices', {
-  params:{stateFilter, dateRangeFilter, searchInvoiceNumber, userFilter}
-});
-export const getImage = (number: any) => axios.get('/getImage', {params: {number}});
-
-export const setInvoiceState = (update:{number:number, state:string}) => axios.post('/set-invoice-state', update)
-
-//Medicines
-export const getMedicines = () => {return axios.get('/getmedicines');};
-export const filterMedicines = (searchName: any, inBenefitsProgram: any) => axios.get('/filter-medicines', {
-    params: {searchName, inBenefitsProgram}
-});
-export const updateRedeemPoints = (medicine: MedicineData) => axios.put('/updateRedeem', medicine);
-export const updateGivenPoints = (medicine: MedicineData) => axios.put('/updateGiven', medicine);
-export const getAllPharmacies = () => axios.get('/get-all-pharmacies');
-
+// Cosos reales de la aplicacion de verdad de veritas pinky promise
 export const searchByWords = (input: SearchByWordData) => axios.get('/searchByWord', {
+    params: {input}
+});
+
+export const getWordTotalCount = (input: any) => axios.get('/get-word-total-count', {
+    params: {input}
+});
+
+export const getWordContTag_page = (input: any) => axios.get('/get-wordContTag', {
+    params: {input}
+});
+
+export const getWordTag_page = (input: any) => axios.get('/get-wordTag', {
     params: {input}
 });

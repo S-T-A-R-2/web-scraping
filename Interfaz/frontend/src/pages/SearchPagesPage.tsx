@@ -11,11 +11,14 @@ const SearchPagesPage = () => {
 
   return (
     <div className="text-white bg-zinc-900 m-auto h-screen max-w-[800px]">
-      <h1 className='text-5xl p-5'>Buscar por palabras</h1>
+      <h1 className='text-5xl p-5'>Buscar por página</h1>
       <div className='flex p-5'>
 				<Input placeholder='Buscar páginas...'/>
         <Button className="inline"> Search </Button>
       </div>
+
+
+
 
       <Button className="text-2xl" onClick={() => {navigate("/")}}>Volver a inicio</Button>
     </div>
