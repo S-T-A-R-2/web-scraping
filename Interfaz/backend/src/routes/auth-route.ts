@@ -1,11 +1,10 @@
 import { Router, Request, Response } from 'express';
 import { createAccessToken } from '../libs/jwt';
-import UserController from '../controllers/auth-controller';
+import {searchByWord} from '../controllers/auth-controller'
 import jwt from 'jsonwebtoken';
-import User from '../models/user-model';
 //import {authRequired} from '../middlewares/validateToken.js';
 const router = Router();
-const userController = UserController.getInstance();
+/*const userController = UserController.getInstance();
 
 export const verifyToken = async (req: any, res: any) => {
     const { token } = req.cookies;
@@ -62,5 +61,6 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/verify', verifyToken);
-
+*/
+router.get('/searchByWord', searchByWord);
 export default router;

@@ -27,6 +27,10 @@ type MedicineData = {
     points_given: number;
 };
 
+type SearchByWordData = {
+    text: string;
+}
+
 export const registerRequest = (userData : UserData) => {return axios.post(`/register`, userData);};
 export const loginRequest = (userData : {username : string, password : string}) => 
     axios.post(`/login`, userData);
@@ -54,3 +58,6 @@ export const updateRedeemPoints = (medicine: MedicineData) => axios.put('/update
 export const updateGivenPoints = (medicine: MedicineData) => axios.put('/updateGiven', medicine);
 export const getAllPharmacies = () => axios.get('/get-all-pharmacies');
 
+export const searchByWords = (input: SearchByWordData) => axios.get('/searchByWord', {
+    params: {input}
+});
