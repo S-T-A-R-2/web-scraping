@@ -75,38 +75,39 @@ def insert_wordcontpage(id_tag, id_page, id_word, count):
     db.commit()
 
 # Leer el archivo
-file_path = "data2_reduced.txt"
-with open(file_path, "r", encoding="utf-8") as file:
-    lines = file.readlines()
+for i in range(1, 27):
+    file_path = f'data{i}_reduced.txt'
+    with open(file_path, "r", encoding="utf-8") as file:
+        lines = file.readlines()
 
-for line in lines:                                          # Procesar cada línea
-    word, details = line.strip().split(":{", 1)             # Separar palabra y contenido
-    details = details[:-1]                                  # Quitar el último '}' al final
+    for line in lines:                                          # Procesar cada línea
+        word, details = line.strip().split(":{", 1)             # Separar palabra y contenido
+        details = details[:-1]                                  # Quitar el último '}' al final
 
-    if (" " in word):
-        id_word = insert_word_contiguous(word)
-        is_contiguous = True
-    else:
-        id_word = insert_word(word)                         # Insertar la palabra
-        is_contiguous = False
-    
-    url_pattern = re.compile(r"https?://[^\s]+: \[.*?\]")   # Procesar cada URL en los detalles
-    
-    for match in url_pattern.findall(details):
-        url, tags = match.split(": [")
-        tags = tags[:-1]                                    # Quitar ']'
-        page_id = insert_page(url)                          # Insertar página
+        if (" " in word):
+            id_word = insert_word_contiguous(word)
+            is_contiguous = True
+        else:
+            id_word = insert_word(word)                         # Insertar la palabra
+            is_contiguous = False
+        
+        url_pattern = re.compile(r"https?://[^\s]+: \[.*?\]")   # Procesar cada URL en los detalles
+        
+        for match in url_pattern.findall(details):
+            url, tags = match.split(": [")
+            tags = tags[:-1]                                    # Quitar ']'
+            page_id = insert_page(url)                          # Insertar página
 
-        for tag_count in tags.split(", "):                  # Procesar etiquetas para cada URL
-            tag, count = tag_count.split(": ")
-            count = int(count)
-            
-            tag_id = get_tag_id(tag)
-            if is_contiguous:
-                insert_wordcontpage(tag_id, page_id, id_word, count)
-            else:
-                insert_pagetag(tag_id, page_id, count)
-                insert_pagetagwords(tag_id, page_id, id_word, count)
+            for tag_count in tags.split(", "):                  # Procesar etiquetas para cada URL
+                tag, count = tag_count.split(": ")
+                count = int(count)
+                
+                tag_id = get_tag_id(tag)
+                if is_contiguous:
+                    insert_wordcontpage(tag_id, page_id, id_word, count)
+                else:
+                    insert_pagetag(tag_id, page_id, count)
+                    insert_pagetagwords(tag_id, page_id, id_word, count)
 
 # Confirmar cambios y cerrar conexión
 db.commit()
