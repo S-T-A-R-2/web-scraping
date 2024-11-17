@@ -35,3 +35,19 @@ export const getWordContTag_page = (input: any) => axios.get('/get-wordContTag',
 export const getWordTag_page = (input: any) => axios.get('/get-wordTag', {
     params: {input}
 });
+
+export const getWordPercentageInPage = (input: any) => axios.get('/word-percentage', {
+    params: {input}
+});
+
+export const getTopTagsWithMostDistinctWords = (input: any) => axios.get('/top-tags-distinct-words', {
+    params: {input}
+});
+
+export const getTopTagsWithMostText = (input: any) => axios.get('/top-tags-text-count', {
+    params: {input}
+});
+
+export const findPageByUrl = (input: any) => axios.get('/find-page-by-url', {
+    params: {input}
+});

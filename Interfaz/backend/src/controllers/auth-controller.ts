@@ -109,3 +109,92 @@ export const getWordTag_page = async (req:any, res:any) => {
 	}
 }
 
+export const getWordPercentageInPage = async (req:any, res:any) => {
+    try {
+        let { input } = req.query;
+        let pageId = input;
+
+        if (!pageId) {
+            return res.status(400).json({ message: "No se proporcionó el ID de la página" });
+        }
+
+        let temp: any;
+        let result: Array<any> = new Array();
+
+        temp = await connectDB("CALL GetWordPercentageInPage(?);", pageId);
+
+        for (const row of Array.from(temp)) {
+            result.push(row);
+        }
+
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ message: "No se pudo obtener el porcentaje de palabras", error: error.message });
+    }
+};
+
+
+export const getTopTagsWithMostDistinctWords = async (req: any, res: any) => {
+    try {
+        let { input } = req.query;
+        let pageId = input;
+
+        if (!pageId) {
+            return res.status(400).json({ message: "No se proporcionó el ID de la página" });
+        }
+
+        let temp: any;
+        let result: Array<any> = new Array();
+
+        temp = await connectDB("CALL GetTopTagsByDistinctWords(?);", pageId);
+
+        for (const row of Array.from(temp)) {
+            result.push(row);
+        }
+
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ message: "No se pudo obtener los TAGs con más palabras distintas", error: error.message });
+        console.log(error);
+    }
+};
+
+export const getTopTagsWithMostText = async (req: any, res: any) => {
+    try {
+        let { input } = req.query;
+        let pageId = input;
+
+        if (!pageId) {
+            return res.status(400).json({ message: "No se proporcionó el ID de la página" });
+        }
+
+        let result: any;
+        result = await connectDB("CALL GetTopTagsByTextCount(?);", pageId);
+
+
+
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ message: "No se pudo obtener los TAGs con más texto", error: error.message });
+        console.log(error);
+    }
+};
+
+export const findPageByUrl = async (req: any, res: any) => {
+    try {
+        const { input } = req.query;
+        const url = input;
+
+        if (!url) {
+            return res.status(400).json({ message: "No se proporcionó el URL." });
+        }
+
+        let result: any;
+        result = await connectDB("SELECT id FROM Page WHERE url = ?", url);
+
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ message: "Error al buscar la página por URL", error: error.message });
+        console.log(error);
+    }
+};

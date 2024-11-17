@@ -7,6 +7,8 @@ import MainPage from './pages/MainPage';
 import SearchPagesPage from './pages/SearchPagesPage';
 import SearchWordsPage from './pages/SearchWordsPage';
 import WordStatisticsPage from './pages/WordStatisticsPage';
+import TopTagsPage from './pages/TopTagsPage'
+import SearchPercentagePage from './pages/SearchPercentagePage';
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/search-words" element = {<SearchWordsPage />} />
             <Route path="/word-statistics" element = {<WordStatisticsPage />} />
+            <Route path="/top-tags" element = {<TopTagsPage />} />
+            <Route path="/search-percentage" element = {<SearchPercentagePage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
