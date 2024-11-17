@@ -12,7 +12,6 @@ const MainPage = () => {
     <div className="text-white bg-zinc-900 flex flex-col items-center justify-center m-auto h-screen max-w-[800px]">
         <h1 className='text-5xl p-5'>Navegador Wikipedia</h1>
         <Button className="text-2xl p-2 m-2 " onClick={() => {navigate("/search-words")}}>Buscar por Palabras</Button>
-        <Button className="text-2xl p-2 m-2 " onClick={()=>{navigate("/search-pages")}}>Buscar por páginas</Button>
         <Button className="text-2xl p-2 m-2" onClick={()=>{navigate("/word-statistics")}}>Buscar estadísticas de palabras</Button>
 
     </div>
