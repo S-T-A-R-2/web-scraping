@@ -17,7 +17,6 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/search-words" element = {<SearchWordsPage />} />
-            <Route path="/search-pages" element = {<SearchPagesPage />} />
             <Route path="/word-statistics" element = {<WordStatisticsPage />} />
           </Routes>
         </BrowserRouter>
