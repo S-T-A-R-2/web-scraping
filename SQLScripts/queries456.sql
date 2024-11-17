@@ -1,6 +1,6 @@
 -- 4
 DELIMITER //
-CREATE PROCEDURE GetWordTotalCount (IN word_text VARCHAR(60))
+CREATE OR REPLACE PROCEDURE GetWordTotalCount (IN word_text VARCHAR(60))
 BEGIN
     SELECT SUM(ptw.count) AS total_count
     FROM PageTagsWords ptw
@@ -9,7 +9,12 @@ BEGIN
     WHERE LOWER(w.text) = LOWER(word_text);
 END //
 -- 5
+<<<<<<< Updated upstream
 CREATE PROCEDURE GetWordTagCountInPage (IN word_text VARCHAR(60))
+=======
+DELIMITER //
+CREATE OR REPLACE PROCEDURE GetWordTagCountInPage (IN word_text VARCHAR(60))
+>>>>>>> Stashed changes
 BEGIN
     SELECT t.text AS tag, p.url AS page_url, SUM(ptw.count) AS count
     FROM PageTagsWords ptw
@@ -23,6 +28,10 @@ BEGIN
     GROUP BY t.text, p.url;
 END //
 -- 6
+<<<<<<< Updated upstream
+=======
+DELIMITER //
+>>>>>>> Stashed changes
 CREATE OR REPLACE PROCEDURE GetWordContTagCountInPage (IN word_text VARCHAR(200))
 BEGIN
     SELECT t.text AS tag, p.url AS page_url, SUM(wcp.count) AS count
